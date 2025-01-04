@@ -64,7 +64,27 @@ coin_route = Route(
         "Chainlink'in son 30 günlük performansı nasıl?",
         "Uniswap'ın güncel fiyatı nedir?",
         "Kripto piyasasında en çok işlem gören coin hangisi?",
-        "Litecoin'in son 1 yıllık fiyat değişimi nasıl?"
+        "Litecoin'in son 1 yıllık fiyat değişimi nasıl?",
+        "What is the price of Bitcoin?",
+        "What is the current price of Ethereum?",
+        "Which cryptocurrency has increased the most in the last 24 hours?",
+        "What is the market cap of Cardano?",
+        "Show the 7-day price chart of Bitcoin.",
+        "What are the top 10 cryptocurrencies?",
+        "Get the historical data of Dogecoin.",
+        "What is the 1-month price change of Solana?",
+        "What is the total market value of the crypto market?",
+        "What is the current price of Binance Coin?",
+        "What is the 24-hour trading volume of Polkadot?",
+        "Show the 1-year price chart of Ripple.",
+        "What are the top 5 most popular cryptocurrencies?",
+        "What is the 1-hour price change of Bitcoin?",
+        "What is the market cap of Avalanche?",
+        "List the current prices of cryptocurrencies.",
+        "What is the 30-day performance of Chainlink?",
+        "What is the current price of Uniswap?",
+        "Which cryptocurrency is the most traded in the market?",
+        "What is the 1-year price change of Litecoin?"
     ]
 )
 
