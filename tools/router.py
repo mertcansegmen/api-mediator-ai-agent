@@ -88,7 +88,31 @@ coin_route = Route(
     ]
 )
 
-routes = [weather_route, finance_route, news_route, coin_route]
+public_holidays_route = Route(
+    name="public_holidays",
+    utterances=[
+        "What are the next public holidays in the United States?",
+        "List all public holidays in Germany for 2024.",
+        "Are there any public holidays in Canada in January 2025?",
+        "What countries have public holidays on January 1, 2025?",
+        "What are the next public holidays worldwide?",
+        "What are the public holidays in January 2025 globally?",
+        "When is the next public holiday in France?",
+        "Is January 1, 2025, a public holiday in Brazil?",
+        "Does the United States observe Christmas as a public holiday?",
+        "Türkiye'deki resmi tatiller nelerdir?",
+        "Almanya'daki 2024 yılı resmi tatil günlerini listele.",
+        "Ocak 2025'te Kanada'da resmi tatil var mı?",
+        "1 Ocak 2025 tarihinde hangi ülkelerde resmi tatil var?",
+        "Dünyadaki bir sonraki resmi tatiller nelerdir?",
+        "Ocak 2025'teki küresel resmi tatiller nelerdir?",
+        "Fransa'daki bir sonraki resmi tatil ne zaman?",
+        "1 Ocak 2025, Brezilya'da resmi tatil mi?",
+        "ABD'de Noel resmi tatil olarak kutlanıyor mu?"
+    ]
+)
+
+routes = [weather_route, finance_route, news_route, coin_route, public_holidays_route]
 route_layer = RouteLayer(encoder=encoder, routes=routes)
 
 def route_query(user_query):
