@@ -7,6 +7,9 @@ import os
 from tools.api_requestor import APIRequest, send_request
 from tools.deepseek import call_deepseek
 from api_request_builders.models import ApiRequestBuilderResponse
+from dotenv import load_dotenv
+
+load_dotenv()
 
 class ResponseExample(BaseModel):
     method: Literal["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS"]
@@ -38,7 +41,7 @@ def _create_system_prompt (api: str) -> str:
     Create a system prompt based on the API name.
 
     Args:
-        api (str): The name of the API(coincap or nager).
+        api (str): The name of the API(coincap, nager or weatherapi).
 
     Returns:
         str: The system prompt for the API.
@@ -108,6 +111,45 @@ def _create_system_prompt (api: str) -> str:
                 }'''
             )
         ]
+    elif api == "weatherapi":
+        api_name = "WeatherAPI"
+        api_server = "http://api.weatherapi.com/v1"
+        api_example_path = "/current.json"
+        additional_info = f"""
+            "You need an API key to access WeatherAPI's free plan. "
+            "Include 'key={os.getenv('WEATHER_API_KEY')}' as a query parameter."
+        """
+        examples = [
+            InteractionExample(
+                prompt="What is the current weather in New York City?",
+                response=f'''{{
+                    "method": "GET",
+                    "server": "http://api.weatherapi.com/v1",
+                    "path": "/current.json",
+                    "query": {{
+                        "q": "New York City",
+                        "key": "{os.getenv('WEATHER_API_KEY')}"
+                    }},
+                    "headers": null,
+                    "body": null
+                }}'''
+            ),
+            InteractionExample(
+                prompt="What is the weather forecast for Tokyo for the next 3 days?",
+                response=f'''{{
+                    "method": "GET",
+                    "server": "http://api.weatherapi.com/v1",
+                    "path": "/forecast.json",
+                    "query": {{
+                        "q": "Tokyo",
+                        "days": "3",
+                        "key": "{os.getenv('WEATHER_API_KEY')}"
+                    }},
+                    "headers": null,
+                    "body": null
+                }}'''
+            )
+        ]
     else:
         raise ValueError("Invalid API name. Please provide a valid API name.")        
     
@@ -153,8 +195,6 @@ def _create_system_prompt (api: str) -> str:
         """
 
     return system_prompt
-
-
 
 def _generate_api_request(user_prompt: str, system_prompt) -> ApiRequestBuilderResponse:
     try:
@@ -235,7 +275,7 @@ def make_humanized_api_request(user_prompt: str, api: str) -> str:
 
     Args:
     user_prompt (str): The user prompt that was sent to the API.
-    api (str): The name of the API(coincap or nager).
+    api (str): The name of the API(coincap, nager or weatherapi nager).
 
     Returns:
     str: A human-readable response.
