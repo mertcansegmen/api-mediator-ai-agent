@@ -271,34 +271,46 @@ def _generate_human_readable_response_from_api_response(initial_user_prompt: str
 
 def make_humanized_api_request(user_prompt: str, api: str) -> str:
     """
-    Given a user prompt and an API name, generate a human-readable response.
+    Given a user prompt and an API name, generate a human-readable response with retries.
 
     Args:
-    user_prompt (str): The user prompt that was sent to the API.
-    api (str): The name of the API(coincap, nager or weatherapi nager).
+        user_prompt (str): The user prompt that was sent to the API.
+        api (str): The name of the API (coincap, nager, or weatherapi).
 
     Returns:
-    str: A human-readable response.
+        str: A human-readable response or error message.
     """
+    max_retries = 3
+    retry_count = 0
 
-    system_prompt_for_request_builder = _create_system_prompt(api)
+    while retry_count < max_retries:
+        system_prompt_for_request_builder = _create_system_prompt(api)
 
-    api_request_builder_response = _generate_api_request(user_prompt, system_prompt_for_request_builder)
+        api_request_builder_response = _generate_api_request(user_prompt, system_prompt_for_request_builder)
 
-    if api_request_builder_response.result == "success":
-        print(f"Generated API Request:")
-        print(api_request_builder_response.api_request.json())
-        print()
-
-        api_requestor_response = send_request(api_request_builder_response.api_request)
-        if api_requestor_response.result == "success":
-            print(f"API Response:")
-            print(api_requestor_response.api_response)
+        if api_request_builder_response.result == "success":
+            print(f"Generated API Request:")
+            print(api_request_builder_response.api_request.json())
             print()
 
-            human_readable_response = _generate_human_readable_response_from_api_response(user_prompt, api_requestor_response.api_response)
-            return human_readable_response
+            api_requestor_response = send_request(api_request_builder_response.api_request)
+
+            if api_requestor_response.result == "success":
+                print(f"API Response:")
+                print(api_requestor_response.api_response)
+                print()
+
+                human_readable_response = _generate_human_readable_response_from_api_response(
+                    user_prompt, api_requestor_response.api_response
+                )
+                return human_readable_response
+            else:
+                print(f"API request failed with message: {api_requestor_response.message}")
+                retry_count += 1
+                continue
         else:
-            return api_requestor_response.message
-    else:
-        return api_request_builder_response.message
+            print(f"API request builder failed with message: {api_request_builder_response.message}")
+            retry_count += 1
+            continue
+
+    return "Sorry, the API request failed after multiple attempts. Please try again later."
