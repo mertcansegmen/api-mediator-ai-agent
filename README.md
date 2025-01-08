@@ -17,7 +17,7 @@ Get the current price of Bitcoin.
 bitcoinin fiyatı ne
 bitcoinin fiyatı haftaya ne olur
 What was the Bitcoin price on April 20, 2024?
-Fetch the price of Ethereum at midnight on January 2, 2023. # TODO: January 1, 2023 çalışmıyor, ama sorun API'de.
+Fetch the price of Ethereum at midnight on January 2, 2023. # TODO: January 1, 2023 does not work, but it's because the API has a gap there.
 What was the price of Bitcoin at 12:00 PM UTC on April 20, 2024?
 20 Nisan 2024 gece yarısında Bitcoin fiyatı neydi?
 Naber?
