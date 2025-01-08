@@ -6,7 +6,7 @@ import re
 import os
 from tools.api_requestor import APIRequest, send_request
 from tools.deepseek import call_deepseek
-from api_request_builders.models import ApiRequestBuilderResponse
+from tools.models import ApiRequestBuilderResponse
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -53,6 +53,7 @@ def _create_system_prompt (api: str) -> str:
         api_example_path = "v2/assets/bitcoin/history"
         additional_info = '''
             - If 'start' and 'end' timestamps are needed, the 'end' timestamp must be greater than the 'start' timestamp. CoinCap's API requires the 'end' timestamp to be greater than the 'start' timestamp.
+            - For time-based data, infer or calculate UNIX timestamps as required.
         '''
         examples = [
             InteractionExample(
